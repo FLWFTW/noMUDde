@@ -1,0 +1,74 @@
+body
+{
+   background-image: url( "../images/bg.png" );
+   box-sizing: border-box;
+   padding: 0px;
+   margin: 0px;
+   overflow-x: hidden;
+}
+
+#wrapper
+{
+   height: 100%;
+   width: 100%;
+   padding: 0px;
+   margin: 0px;
+}
+
+#header
+{
+   width: 100%;
+   background-color: #0f0f0f;
+   padding: 5px;
+}
+
+h1
+{
+   color: silver;
+}
+
+#client
+{
+   width: 80%;
+   height: 80%;
+   margin-left: auto;
+   margin-right: auto;
+   border: 1px solid silver;
+}
+
+#output
+{
+   background: black;
+   height: 100%;
+   width: 100%;
+   color: white;
+   font-family: "Courier New", courier, monospace;
+   font-size: 16px;
+   overflow-y: scroll;
+   overflow-x: hidden;
+   word-wrap: normal;
+   padding: 5px;
+}
+
+#input
+{
+   width: 100%;
+}
+
+#connect
+{
+   width: 100%;
+   color: white;
+   background-color: forestgreen;
+   border: 1px solid green;
+   display: none;
+}
+
+#footer
+{
+   background-color: #0f0f0f;
+   color: white;
+   bottom: 0px;
+   padding: 5px;
+}
+

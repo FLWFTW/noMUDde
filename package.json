@@ -1,0 +1,8 @@
+{
+  "name": "mud-client",
+  "version": "1.0.0",
+  "description": "A basic web-based MUD client.",
+  "dependencies": {
+    "body-parser": "^1.17.2"
+  }
+}

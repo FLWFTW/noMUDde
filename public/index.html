@@ -1,0 +1,30 @@
+<html>
+   <head>
+      <title>noMUDde MUD Client</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="./main.js"></script>
+      <link rel="stylesheet" href="./css/style.css">
+      <link rel="stylesheet" href="./css/colors.css">
+   </head>
+   <body>
+      <div id='wrapper'>
+         <div id='header'>
+            <h1>noMUDde</h1>
+         </div>
+         <br>
+          <div id='client' resizeable>
+            <div id='output'></div>
+            <form id='input_form'>
+               <input type='text' id='input' autocomplete='off'>
+               <input type='button' id='connect' value='Connect'>
+            </form>
+         </div>
+         <br><br><br>
+         <div id='footer'>
+            noMUDde written by William Sayin
+         </div>
+      </div>
+   </body>
+</html>
+

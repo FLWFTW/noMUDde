@@ -1,0 +1,43 @@
+/* file: colors.css
+ * desc: classes for different ANSI color codes
+ * 12 August 2017
+ */
+
+/*Foreground Colors*/
+.fg-b{ color: navy; } /*Navy blue*/
+.fg-c{ color: teal; } /*Steel blue*/
+.fg-g{ color: darkgreen; } /*Dark moss green*/
+.fg-o{ color: darkorange; } /*Orange*/
+.fg-p{ color: purple; } /*Tyrian purple*/
+.fg-r{ color: maroon; } /*Maroon*/
+.fg-w{ color: silver; } /*Silver*/
+.fg-x{ color: black; } /*Black*/
+
+.fg-B{ color: cornflowerblue; } /*Bleu de France*/
+.fg-C{ color: cyan; } /*Cyan*/
+.fg-G{ color: lawngreen; } /*Bright Green*/
+.fg-Y{ color: yellow; } /*Chartreuse*/
+.fg-P{ color: hotpink; } /*Amaranth*/
+.fg-R{ color: red; } /*Red*/
+.fg-W{ color: white; } /*White*/
+.fg-z{ color: #555555; } /*Davey's grey*/
+
+/*Background Colors*/
+.bg-b{ background-color: navy; } /*Navy blue*/
+.bg-c{ background-color: teal; } /*Steel blue*/
+.bg-g{ background-color: darkgreen; } /*Dark moss green*/
+.bg-o{ background-color: darkorange; } /*Orange*/
+.bg-p{ background-color: purple; } /*Tyrian purple*/
+.bg-r{ background-color: maroon; } /*Maroon*/
+.bg-w{ background-color: silver; } /*Silver*/
+.bg-x{ background-color: black; } /*Black*/
+
+.bg-B{ background-color: cornflowerblue; } /*Bleu de France*/
+.bg-C{ background-color: cyan; } /*Cyan*/
+.bg-G{ background-color: lawngreen; } /*Bright Green*/
+.bg-Y{ background-color: yellow; } /*Chartreuse*/
+.bg-P{ background-color: hotpink; } /*Amaranth*/
+.bg-R{ background-color: red; } /*Red*/
+.bg-W{ background-color: white; } /*White*/
+.bg-z{ background-color: #555555; } /*Davey's grey*/
+
