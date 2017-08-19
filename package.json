@@ -1,17 +1,17 @@
 {
-  "name": "noMUDde",
-  "version": "1.0.0",
-  "description": "A basic web-based MUD client.",
-  "main": "index.js",
-  "author": "Will Sayin",
-  "license": "CC BY-SA",
-  "dependencies":
-  {
-    "express": "~4.15.4",
-    "socket.io": "~2.0.3"
-  },
-  "scripts": 
-  {
-     "start": "node index.js"
-  }
+    "name": "noMUDde",
+    "version": "1.0.0",
+    "description": "A basic web-based MUD client.",
+    "main": "index.js",
+    "author": "Will Sayin",
+    "license": "CC BY-SA",
+    "dependencies":
+    {
+       "express": "~4.15.4",
+       "socket.io": "~2.0.3"
+    },
+    "scripts": 
+    {
+       "start": "node index.js"
+    }
 }

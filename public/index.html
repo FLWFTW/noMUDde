@@ -1,16 +1,42 @@
 <html>
-   <head>
+<!--
+   Name: noMUDde MUD Client
+   Description: A basic MUD client built on node.js using sockets.io and express
+   Author: William Sayin
+   Date: 18 August 2017
+   License: Create Commons: Attribution Share-Alike 4.0 International License
+-->
+<head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8"/>
+      <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
       <title>noMUDde MUD Client</title>
+      <link href="https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Roboto+Mono|Source+Code+Pro|VT323" rel="stylesheet">
+      <link rel="stylesheet" href="./css/style.css">
+      <link rel="stylesheet" href="./css/colors.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script src="./main.js"></script>
-      <link rel="stylesheet" href="./css/style.css">
-      <link rel="stylesheet" href="./css/colors.css">
    </head>
    <body>
       <div id='wrapper'>
          <div id='header'>
             <h1>noMUDde</h1>
+            <div id='settings'>
+               <div id='settings-content'>
+                  <label>Font&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <select id='font-select'>
+                     <option value='monospace' selected>System Default</option>
+                     <option value='Droid Sans Mono'>Droid Sans Mono</option>
+                     <option value='Roboto Mono'>Roboto Mono</option>
+                     <option value='Source Code Pro'>Source Code Pro</option>
+                     <option value='VT323'>VT323</option>
+                  </select>
+                  </label>
+                  <br>
+                  <label>Font Size&nbsp;&nbsp;<input type='range' id='font-size' min='8' max='32' step='2' value='14'></input></label>
+               </div>
+            </div>
          </div>
          <br>
           <div id='client' resizeable>
@@ -22,8 +48,8 @@
          </div>
          <br><br><br>
          <div id='footer'>
-            noMUDde written by William Sayin <br>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            noMUDde written by <a href='https://github.com/FLWFTW' target="_blank">William Sayin</a><br>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
          </div>
       </div>
    </body>

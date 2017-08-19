@@ -3,41 +3,70 @@
  * 12 August 2017
  */
 
-/*Foreground Colors*/
-.fg-b{ color: navy; } /*Navy blue*/
-.fg-c{ color: teal; } /*Steel blue*/
-.fg-g{ color: darkgreen; } /*Dark moss green*/
-.fg-o{ color: darkorange; } /*Orange*/
-.fg-p{ color: purple; } /*Tyrian purple*/
-.fg-r{ color: maroon; } /*Maroon*/
-.fg-w{ color: silver; } /*Silver*/
-.fg-x{ color: black; } /*Black*/
+.ansi0{ color: white; background-color: black; text-decoration: none; font-style: normal;  }
+.c0m{ color: white; background-color: black; text-decoration: none; font-style: normal;  }
+.cm{ color: white; background-color: black; text-decoration: none; font-style: normal;  }
+.ansi3{ font-style: italic }
+.ansi4{ text-decoration: underline }
+.ansi5{ text-decoration: blink }
+.ansi7{ -webkit-filter: invert(100%); filter: invert(100%); }
+.ansi9{ text-decoration: line-through }
+.
+/*Regular Foreground Colors*/
+.c30m{ color: #000000; }
+.c31m{ color: #800000; }
+.c32m{ color: #006400; }
+.c33m{ color: #FF8C00; }
+.c34m{ color: #00008B; } 
+.c35m{ color: #800080; }
+.c36m{ color: #008080; }
+.c37m{ color: #C0C0C0; }
 
-.fg-B{ color: cornflowerblue; } /*Bleu de France*/
-.fg-C{ color: cyan; } /*Cyan*/
-.fg-G{ color: lawngreen; } /*Bright Green*/
-.fg-Y{ color: yellow; } /*Chartreuse*/
-.fg-P{ color: hotpink; } /*Amaranth*/
-.fg-R{ color: red; } /*Red*/
-.fg-W{ color: white; } /*White*/
-.fg-z{ color: #555555; } /*Davey's grey*/
+/*Bright Foreground Colors*/
+.B30m{ color: #555555; }
+.B31m{ color: #FF0000; }
+.B32m{ color: #7CFC00; }
+.B33m{ color: #FFFF00; }
+.B34m{ color: #6495ED; }
+.B35m{ color: #FF69B4; }
+.B36m{ color: #00FFFF; }
+.B37m{ color: #FFFFFF; }
 
 /*Background Colors*/
-.bg-b{ background-color: navy; } /*Navy blue*/
-.bg-c{ background-color: teal; } /*Steel blue*/
-.bg-g{ background-color: darkgreen; } /*Dark moss green*/
-.bg-o{ background-color: darkorange; } /*Orange*/
-.bg-p{ background-color: purple; } /*Tyrian purple*/
-.bg-r{ background-color: maroon; } /*Maroon*/
-.bg-w{ background-color: silver; } /*Silver*/
-.bg-x{ background-color: black; } /*Black*/
+.c40m{ background-color: #000000; }
+.c41m{ background-color: #800000; }
+.c42m{ background-color: #006400; }
+.c43m{ background-color: #FF8C00; }
+.c44m{ background-color: #00008B; } 
+.c45m{ background-color: #800080; }
+.c46m{ background-color: #008080; }
+.c47m{ background-color: #C0C0C0; }
+.c50m{ background-color: #000000; }
+.c51m{ background-color: #800000; }
+.c52m{ background-color: #006400; }
+.c53m{ background-color: #FF8C00; }
+.c54m{ background-color: #00008B; } 
+.c55m{ background-color: #800080; }
+.c56m{ background-color: #008080; }
+.c57m{ background-color: #C0C0C0; }
 
-.bg-B{ background-color: cornflowerblue; } /*Bleu de France*/
-.bg-C{ background-color: cyan; } /*Cyan*/
-.bg-G{ background-color: lawngreen; } /*Bright Green*/
-.bg-Y{ background-color: yellow; } /*Chartreuse*/
-.bg-P{ background-color: hotpink; } /*Amaranth*/
-.bg-R{ background-color: red; } /*Red*/
-.bg-W{ background-color: white; } /*White*/
-.bg-z{ background-color: #555555; } /*Davey's grey*/
-
+/*Repeated to work with the c/B
+ * brightness specifier even though
+ * it doesn't matter for the
+ * background colors*/
+.B40m{ background-color: #000000; }
+.B41m{ background-color: #800000; }
+.B42m{ background-color: #006400; }
+.B43m{ background-color: #FF8C00; }
+.B44m{ background-color: #00008B; } 
+.B45m{ background-color: #800080; }
+.B46m{ background-color: #008080; }
+.B47m{ background-color: #C0C0C0; }
+.B50m{ background-color: #000000; }
+.B51m{ background-color: #800000; }
+.B52m{ background-color: #006400; }
+.B53m{ background-color: #FF8C00; }
+.B54m{ background-color: #00008B; } 
+.B55m{ background-color: #800080; }
+.B56m{ background-color: #008080; }
+.B57m{ background-color: #C0C0C0; }

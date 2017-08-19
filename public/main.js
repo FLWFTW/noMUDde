@@ -40,73 +40,34 @@ function sanitizeString( input )
 
 function ansiEncode( input )
 {
-   if( input == "\xFF\xFC\x01" ) //IAC WONT TELOPT ECHO
-      getElementById("input").setAttribute( 'type', 'password' );
-   else if( input == "\xFF\xFB\x01" ) //IAC WILL TELOPT ECHO
-      getElementById("input").setAttribute( 'type', 'text' );
-
-   //all the colors below are just my visual estimation of what they should be,
-   //feel free to replace with the actuall hex colorcodes if you feel like it.
-
-   //excess stuff that I'm not sure what to do with...
-   input = input.replace( /\[m/g, "<span style='color: silver;background-color:black;'>" );
-   input = input.replace( /\[0m/g, "<span style='color: silver;background-color:black;'>" );
-   input = input.replace( /\[0;/g, "[" );
-   input = input.replace( /\[1;/g, "[" );
-   input = input.replace( /\[1m;/g, "<span style='color: white;background-color:black;'>" );
-   input = input.replace( /\[1m/g, "<span style='color: white;background-color:black;'>" );
-
-   ////////////////foreground colors//////////////////////
-   //normal 'dull' colors
-   input = input.replace( /\[30m/g, "<span class='fg-x'>" );
-   input = input.replace( /\[31m/g, "<span class='fg-r'>" );
-   input = input.replace( /\[32m/g, "<span class='fg-g'>" );
-   input = input.replace( /\[33m/g, "<span class='fg-o'>" );
-   input = input.replace( /\[34m/g, "<span class='fg-b'>" );
-   input = input.replace( /\[35m/g, "<span class='fg-p'>" );
-   input = input.replace( /\[36m/g, "<span class='fg-c'>" );
-   input = input.replace( /\[37m/g, "<span class='fg-w'>" );
-
-   //normal 'dull' colors
-   input = input.replace( /\[0;30m/g, "<span class='fg-x'>" );
-   input = input.replace( /\[0;31m/g, "<span class='fg-r'>" );
-   input = input.replace( /\[0;32m/g, "<span class='fg-g'>" );
-   input = input.replace( /\[0;33m/g, "<span class='fg-o'>" );
-   input = input.replace( /\[0;34m/g, "<span class='fg-b'>" );
-   input = input.replace( /\[0;35m/g, "<span class='fg-p'>" );
-   input = input.replace( /\[0;36m/g, "<span class='fg-c'>" );
-   input = input.replace( /\[0;37m/g, "<span class='fg-w'>" );
-
-   //bright 'bold' colors
-   input = input.replace( /\[1;30m/g, "<span class='fg-z'>" );
-   input = input.replace( /\[1;31m/g, "<span class='fg-R'>" );
-   input = input.replace( /\[1;32m/g, "<span class='fg-G'>" );
-   input = input.replace( /\[1;33m/g, "<span class='fg-Y'>" );
-   input = input.replace( /\[1;34m/g, "<span class='fg-B'>" );
-   input = input.replace( /\[1;35m/g, "<span class='fg-P'>" );
-   input = input.replace( /\[1;36m/g, "<span class='fg-C'>" );
-   input = input.replace( /\[1;37m/g, "<span class='fg-W'>" );
-
-   /////////background colors///////////////
-   //normal 'dull' colors //normal 'dull' colors
-   input = input.replace( /\[40m/g, "<span class='bg-x'>" );
-   input = input.replace( /\[41m/g, "<span class='bg-r'>" );
-   input = input.replace( /\[42m/g, "<span class='bg-g'>" );
-   input = input.replace( /\[43m/g, "<span class='bg-o'>" );
-   input = input.replace( /\[44m/g, "<span class='bg-b'>" );
-   input = input.replace( /\[45m/g, "<span class='bg-p'>" );
-   input = input.replace( /\[46m/g, "<span class='bg-c'>" );
-   input = input.replace( /\[47m/g, "<span class='bg-w'>" );
-
-   //bright 'bold' colors
-   input = input.replace( /\[5;40m/g, "<span class='bg-z'>" );
-   input = input.replace( /\[5;41m/g, "<span class='bg-R'>" );
-   input = input.replace( /\[5;42m/g, "<span class='bg-G'>" );
-   input = input.replace( /\[5;43m/g, "<span class='bg-Y'>" );
-   input = input.replace( /\[5;44m/g, "<span class='bg-B'>" );
-   input = input.replace( /\[5;45m/g, "<span class='bg-P'>" );
-   input = input.replace( /\[5;46m/g, "<span class='bg-C'>" );
-   input = input.replace( /\[5;47m/g, "<span class='bg-W'>" );
+   input = input.replace( /\[([0-9];)*[0-9]*m/g,
+         function( data )
+         {
+            data = data.substr( 1, data.length ); //knock off the leading '['
+            var args = data.split( ';' );
+            var ret = new String();
+            if (args[0] == 1 ) //Bright mode is set
+            {
+               var colorClass = 'B' + args[args.length-1];
+               args = args.slice( 1, args.length-1 );
+               for( i = 0; i < args.length; i++ )
+               {
+                  ret += "ansi" + args[i] + " ";
+               }
+               ret += colorClass;
+            }
+            else
+            {
+               var colorClass = 'c' + args[args.length-1];
+               args = args.slice( 0, args.length-1);
+               for( i = 0; i < args.length; i++ )
+               {
+                  ret += "ansi" + args[i] + " ";
+               }
+               ret += colorClass;
+            }
+               return "<span class='" + ret + "'>";
+         });
 
    //Count how many spans I have to close
    var tmp = input.replace( /\<span/g, "" );
@@ -118,75 +79,126 @@ function ansiEncode( input )
    return input;
 }
 
+function parseEmails( data )
+{
+   var emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi;
+
+   data = data.replace( emailRegex,
+         function( email )
+         {
+            return "<a class='output' href='mailto:" + email + "' target='_blank'>" + email + "</a>";
+         });
+   return data;
+}
+
+function parseURLs( data )
+{
+   var urlRegex = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/ig;
+
+   data = data.replace( urlRegex,
+         function( url )
+         {
+            return "<a class='output' href='" + url + "' target='_blank'>" + url + "</a>";
+         });
+   return data;
+}
+
+function writeTermRaw( data )
+{
+   $("#output").append( data );
+   $("#output").scrollTop( $("#output")[0].scrollHeight);
+}
+
 function writeTerm( data )
 {
-   $("#output").append( ansiEncode( sanitizeString( data ) ) );
-   $("#output").scrollTop( $("#output")[0].scrollHeight);
+   data = sanitizeString( data );
+   data = ansiEncode( data );
+   data = parseEmails( data );
+   data = parseURLs( data );
+   writeTermRaw( data );
 };
 
    
-   $(document).ready(
-      function()
-      {
-         var socket = io();
-         $("#input").select();
+$(document).ready(
+   function()
+   {
+      var socket = io();
+      $("#input").select();
 
-         socket.on( 'data',
+      socket.on( 'data',
+         function( data )
+         {
+            writeTerm( data );
+         });
+
+      socket.on( 'status',
             function( data )
             {
-               writeTerm( data );
+               switch( data.msg )
+               {
+                  case 'connect':
+                     {
+                        writeTermRaw( '\n::Connected to ' + data.host + ' on port ' + data.port + '::\n<br>' );
+                        $("#connect").hide( 400 );
+                        $("#input").show( 400 );
+                        break;
+                     }
+                  case 'lookup':
+                     {
+                        writeTermRaw( '\n::Resolving host ' + data.host+ ' port ' + data.port + '::\n<br>' );
+                        break;
+                     }
+                  case 'error':
+                     {
+                        writeTermRaw( '\n::Unable to connect to ' + data.host+ ' port ' + data.port + '::\n<br>' );
+                        writeTermRaw( '::Connection refused::\n<br>' );
+                        break;
+                     }
+                  case 'close':
+                     {
+                        writeTermRaw( '\n::Connection closed::<br>' );
+                        $("#input").hide( 400 );
+                        $("#connect").show( 400 );
+                        break;
+                     }
+                  default:
+                     {
+                        writeTerm( data.msg );
+                        break;
+                     }
+               }
             });
 
-         socket.on( 'status',
-               function( data )
-               {
-                  switch( data.msg )
-                  {
-                     case 'connect':
-                        {
-                           writeTerm( '\n::Connected to ' + data.host+ ' on port ' + data.port + '::\n' );
-                           $("#connect").hide( 400 );
-                           $("#input").show( 400 );
-                           break;
-                        }
-                     case 'lookup':
-                        {
-                           writeTerm( '\n::Resolving host ' + data.host+ ' port ' + data.port + '::\n' );
-                           break;
-                        }
-                     case 'error':
-                        {
-                           writeTerm( '\n::Unable to connect to ' + data.host+ ' port ' + data.port + '::\n' );
-                           writeTerm( '::Connection refused::\n' );
-                           break;
-                        }
-                     case 'close':
-                        {
-                           writeTerm( '\n::Connection closed::' );
-                           $("#input").hide( 400 );
-                           $("#connect").show( 400 );
-                           break;
-                        }
-                     default:
-                        {
-                           writeTerm( data.msg );
-                           break;
-                        }
-                  }
-               });
+      $("#input_form").submit(
+         function( event )
+         {
+            event.preventDefault();
+            socket.emit( "command", $("#input").val() );
+            $("#input").select();
+         });
 
-         $("#input_form").submit(
-            function( event )
+      $("#connect").click(
+            function()
             {
-               event.preventDefault();
-               socket.emit( "command", $("#input").val() );
-               $("#input").select();
+               location.reload();
             });
 
-         $("#connect").click(
-               function()
-               {
-                  location.reload();
-               });
+      $("#settings-tab").click(
+            function()
+            {
+               $("#settings-content").toggle();
+            });
 
-       });
+      $("#font-select").on( 'change',
+            function()
+            {
+               $("#output").css( "font-family", $("#font-select").val() );
+               $("#output").scrollTop( $("#output")[0].scrollHeight);
+            });
+      $("#font-size").on( 'change',
+            function()
+            {
+               $("#output").css( "font-size", $("#font-size").val() );
+               $("#output").scrollTop( $("#output")[0].scrollHeight);
+            });
+    });

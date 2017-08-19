@@ -52,7 +52,7 @@ io.on( 'connection',
                {
                   socket.emit( 'status', { host: hostname, 
                                            port: hostport, 
-                                           msg: 'error' } );
+                                           msg: 'lookup' } );
                });
          
          socket.on( 'command',
@@ -63,7 +63,5 @@ io.on( 'connection',
                      socket.emit( 'data', '\r\n' + cmd + '\r\n');
                      client.write( cmd + '\r\n\0' );
                   }
-                  else if( cmd == 'reconnect' )
-                     client = net.createConnection( { host:hostname, port:hostport } );
                });
       });
