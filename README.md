@@ -1,8 +1,18 @@
 # noMUDde
 Node.js based MUD client
 
-This is a pretty basic web-based MUD client. I think it sets up a good table to build a robust and feature-rich web client for any MUD.
+A basic MUD client built with express.js and socket.io packages.
 
-It currently supports most ANSI color codes (Really complex color sequences get jumbled by the REGEX parser). Not really much else to say. Feel free to check it out at www.darkstonemud.com:8080
+Supports:
+   o ANSI colors
+   o Custom fonts and font sizes
+TODO:
+   o Command history
+   o Parse TELNET codes (Turn the input text box into a password box when it receives the 'echo off' command, etc)
+   o Parse prompt and create custom HP/MANA/ETC bars
+   o aliases, triggers, timers
+   o save config to an account
 
-Thanks, and let me know what you think.
+Check it out live at www.darkstonemud.com:8080
+
+Thanks and let me know what you think!
