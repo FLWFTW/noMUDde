@@ -1,11 +1,18 @@
 # noMUDde
-Node.js based MUD client
+### Node.js based MUD client
 
-A basic MUD client built with express.js and socket.io packages.
+noMUDde is a basic MUD client written using the express.js and socket.io libraries.
 
-Supports ANSI colors and custom fonts and font sizes
-   
-TODO: Command history, Parse TELNET codes (Turn the input text box into a password box when it receives the 'echo off' command, etc), Parse prompt and create custom HP/MANA/ETC bars, aliases, triggers, timers, and save config to an accounts
+#### TODO
+- [x] support ANSI colors
+- [x] clickable links and emails
+- [x] customizeable fonts and font-size
+- [ ] better proxying support
+- [ ] command history
+- [ ] support MXP [MUD eXtension Protocol](http://www.zuggsoft.com/zmud/mxp.htm)
+- [ ] parse prompt and create health/mana/etc bars
+- [ ] triggers, timers, aliases, etc
+- [ ] save all of the above to user accounts
 
 Check it out live at www.darkstonemud.com:8080
 
