@@ -1,14 +1,117 @@
-function sanitizeString( input )
+var socket = io();
+
+var commands = {
+       IAC:     255, // interpret as command
+       DONT:    254, // you are not to use option
+       DO:      253, // please use option
+       WONT:    252, // I won't use option
+       WILL:    251, // I will use option
+       SB:      250, // sub-negotiation
+       GA:      249, // Go-ahead
+       EL:      248, // Erase line
+       EC:      247, // Erase character
+       AYT:     246, // Are you there?
+       AO:      245, // Abort output (but let prog finish)
+       IP:      244, // Interrupt (permanently)
+       BREAK:   243,
+       DM:      242, // Data mark
+       NOP:     241,
+       SE:      240, // End sub-negotiation
+       EOR:     239, // End of record (transparent mode)
+       ABORT:   238, // Abort process
+       SUSP:    237, // Suspend process
+       EOF:     236, // End of file
+       SYNCH:   242
+};
+
+var telOpts =
+   {
+       ECHO: 1,   // Echo
+       SUPR: 3,   // Supress
+       STAT: 5,   // Status
+       TIME: 6,   // Timing Mark
+       TTYP: 24,  // Terminal Type
+       WSIZ: 31,  // Window Size
+       TSPD: 32,  // Terminal Speed
+       RFCT: 33,  // Remote Flow Control
+       LNMD: 34,  // Line Mode
+       ENVS: 36,  // Environmental Variables
+       MXP:  91  // MPX (MUD eXtension Protocol)
+   }
+
+function turnEchoOff()
 {
-   var tmp = input.split("");
+   console.log( "Echo OFF" );
+   $("#input_form").hide();
+   $("#password_form").show();
+   $("#pw_input").select();
+}
+
+function turnEchoOn()
+{
+   console.log( "Echo ON" );
+   $("#input_form").show();
+   $("#password_form").hide();
+   $("#input").select();
+}
+       
+
+function telnetNegotiations( input )
+{
    var output = new String();
 
    for( i = 0; i < input.length; i++ )
    {
-      switch( tmp[i] )
+      switch( input.charCodeAt(i) )
+      {
+         case commands.IAC:
+         {
+            let iac = input.charCodeAt( i );
+            let command = input.charCodeAt( i + 1 );
+            let option = input.charCodeAt( i + 2 );
+
+            if( command == commands.WILL ) //251
+            {
+               if( option == telOpts.ECHO )
+               {
+                  turnEchoOff();
+               }
+            }
+            else if( command == commands.WONT ) //252
+            {
+               if( option == telOpts.ECHO )
+               {
+                  turnEchoOn();
+               }
+            }
+            else
+            {
+               console.log( "Unsupported telnet negotiation command " + command + "." );
+            }
+            i+= 2; //skip the command and option characters
+
+            break;
+         }
+         default:
+         {
+            output += input[i];
+            break;
+         }
+      }
+   }
+   return output;
+}
+
+function sanitizeString( input )
+{
+   var output = new String();
+
+   for( i = 0; i < input.length; i++ )
+   {
+      switch( input.charAt(i) )
       {
          default:
-            output += tmp[i];
+            output += input.charAt(i);
             break;
          case '<':
             output += "&lt;";
@@ -111,6 +214,7 @@ function writeTermRaw( data )
 
 function writeTerm( data )
 {
+   data = telnetNegotiations( data );
    data = sanitizeString( data );
    data = ansiEncode( data );
    data = parseEmails( data );
@@ -122,7 +226,6 @@ function writeTerm( data )
 $(document).ready(
    function()
    {
-      var socket = io();
       $("#input").select();
 
       socket.on( 'data',
@@ -174,7 +277,16 @@ $(document).ready(
          {
             event.preventDefault();
             socket.emit( "command", $("#input").val() );
+            writeTermRaw( $("#input").val() + "<br>" );
             $("#input").select();
+         });
+
+      $("#password_form").submit(
+         function( event )
+         {
+            event.preventDefault();
+            socket.emit( "command", $("#pw_input").val() );
+            $("#pw_input").select();
          });
 
       $("#connect").click(

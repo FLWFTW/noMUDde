@@ -17,6 +17,7 @@ io.on( 'connection',
       function( socket )
       {
          var client = net.createConnection( { host:hostname, port:hostport } );
+         client.setEncoding( "latin1" );
 
          client.on( 'data',
                function( data )
@@ -60,8 +61,15 @@ io.on( 'connection',
                {
                   if( !client.destroyed )
                   {
-                     socket.emit( 'data', '\r\n' + cmd + '\r\n');
-                     client.write( cmd + '\r\n\0' );
+                     client.write( cmd + '\n' );
+                  }
+               });
+         socket.on( 'telopt',
+               function( cmd )
+               {
+                  if( !client.destroyed )
+                  {
+                     client.write( cmd + '\n' );
                   }
                });
       });

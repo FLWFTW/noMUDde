@@ -64,7 +64,7 @@ a.output:hover
    text-decoration: underline;
 }
 
-#input
+#input, #pw_input
 {
    width: 100%;
 }
