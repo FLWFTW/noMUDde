@@ -1,4 +1,14 @@
-var socket = io();
+function getURLParameter(name) {
+     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+}
+
+var hostname = getURLParameter("host");
+var port = getURLParameter("port");
+var socket;
+if( hostname == null || port == null || isNaN(parseInt(port)) )
+   socket = io();
+else
+   socket = io({query: { hostname: hostname, hostport: parseInt(port) } });
 
 var commands = {
        IAC:     255, // interpret as command
@@ -36,12 +46,11 @@ var telOpts =
        RFCT: 33,  // Remote Flow Control
        LNMD: 34,  // Line Mode
        ENVS: 36,  // Environmental Variables
-       MXP:  91  // MPX (MUD eXtension Protocol)
+       MXP:  91  // MXP (MUD eXtension Protocol)
    }
 
 function turnEchoOff()
 {
-   console.log( "Echo OFF" );
    $("#input_form").hide();
    $("#password_form").show();
    $("#pw_input").select();
@@ -49,12 +58,11 @@ function turnEchoOff()
 
 function turnEchoOn()
 {
-   console.log( "Echo ON" );
    $("#input_form").show();
    $("#password_form").hide();
    $("#input").select();
 }
-       
+
 
 function telnetNegotiations( input )
 {
@@ -92,6 +100,8 @@ function telnetNegotiations( input )
 
             break;
          }
+         case 0x1b:
+            break;
          default:
          {
             output += input[i];
@@ -149,6 +159,7 @@ function ansiEncode( input )
             data = data.substr( 1, data.length ); //knock off the leading '['
             var args = data.split( ';' );
             var ret = new String();
+
             if (args[0] == 1 ) //Bright mode is set
             {
                var colorClass = 'B' + args[args.length-1];
@@ -169,7 +180,7 @@ function ansiEncode( input )
                }
                ret += colorClass;
             }
-               return "<span class='" + ret + "'>";
+            return "<span class='" + ret + "'>";
          });
 
    //Count how many spans I have to close
@@ -178,7 +189,6 @@ function ansiEncode( input )
    //close them
    for( i = 0; i < count; i++ )
       input += "</span>";
- 
    return input;
 }
 
@@ -214,15 +224,10 @@ function writeTermRaw( data )
 
 function writeTerm( data )
 {
-   data = telnetNegotiations( data );
-   data = sanitizeString( data );
-   data = ansiEncode( data );
-   data = parseEmails( data );
-   data = parseURLs( data );
-   writeTermRaw( data );
-};
+   writeTermRaw( parseURLs( parseEmails( ansiEncode( sanitizeString( telnetNegotiations( data ) ) ) ) ) );
+}
 
-   
+
 $(document).ready(
    function()
    {
@@ -292,6 +297,7 @@ $(document).ready(
       $("#connect").click(
             function()
             {
+               //socket = io.connect('https://www.darkstonemud.com:8080');
                location.reload();
             });
 
